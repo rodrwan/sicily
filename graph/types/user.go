@@ -17,7 +17,10 @@ var User = graphql.NewObject(graphql.ObjectConfig{
 			Type: graphql.String,
 		},
 		"created_at": &graphql.Field{
-			Type: graphql.String,
+			Type: graphql.Int,
+		},
+		"updated_at": &graphql.Field{
+			Type: graphql.Int,
 		},
 	},
 })
