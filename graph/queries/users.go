@@ -41,12 +41,31 @@ func GetUser(ctx *graph.Context) *graphql.Field {
 	}
 }
 
+// GetUsers get a collection of users
+func GetUsers(ctx *graph.Context) *graphql.Field {
+	return &graphql.Field{
+		Type:        graphql.NewList(types.User),
+		Description: "Get collection of users",
+		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+			ctxb := context.Background()
+			opts := &citizens.SelectRequest{}
+			uu, err := ctx.UserService.Select(ctxb, opts)
+			if err != nil {
+				return nil, err
+			}
+
+			return uu.Data, nil
+		},
+	}
+}
+
 // Users expose UserQuery
 func Users(ctx *graph.Context) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
 		Name: "UserQueries",
 		Fields: graphql.Fields{
-			"users": GetUser(ctx),
+			"getUser":  GetUser(ctx),
+			"getUsers": GetUsers(ctx),
 		},
 	})
 }

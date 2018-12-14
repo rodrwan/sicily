@@ -12,6 +12,7 @@ import (
 
 	"github.com/graphql-go/graphql"
 	"github.com/rodrwan/sicily/graph"
+	"github.com/rodrwan/sicily/graph/mutation"
 	"github.com/rodrwan/sicily/graph/queries"
 	"github.com/rodrwan/syracuse/citizens"
 )
@@ -25,7 +26,8 @@ func main() {
 	}
 
 	schema, err := graphql.NewSchema(graphql.SchemaConfig{
-		Query: queries.Users(ctx),
+		Query:    queries.Users(ctx),
+		Mutation: mutation.Users(ctx),
 	})
 	check(err)
 
